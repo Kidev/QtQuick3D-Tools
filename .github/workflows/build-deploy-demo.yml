@@ -12,7 +12,7 @@ jobs:
       qt_version: '6.8.1'
       qt_host_arch: 'gcc_64'
       qt_target_arch: 'wasm_singlethread'
-      qt_modules: 'all wasm_singlethread'
+      qt_modules: 'all'
       qt_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/Qt'
       qt_root_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
       target_folder: 'QtQuick3D-Tools'
