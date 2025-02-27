@@ -17,6 +17,7 @@ jobs:
       qt_root_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
       target_folder: 'QtQuick3D-Tools'
       source_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/build/example'
+      aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@install_qt_commercial'
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
