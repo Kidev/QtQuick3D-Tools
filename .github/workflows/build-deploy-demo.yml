@@ -38,14 +38,14 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@v5
 
       - name: Install Qt
-        uses: Kidev/install-qt-action@v4.4.2
+        uses: Kidev/install-qt-action@v4.4.3
         with:
           version: '6.8.1'
           target: 'desktop'
           arch: 'linux_gcc_64'
-          use-commercial: true
-          user: ${{ secrets.QT_USERNAME }}
-          password: ${{ secrets.QT_PASSWORD }}
+          use-official: true
+          email: ${{ secrets.QT_USERNAME }}
+          pw: ${{ secrets.QT_PASSWORD }}
           modules: ${{ env.qt_modules }}
           dir: ${{ env.qt_root_folder }}
           
