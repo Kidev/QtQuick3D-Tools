@@ -17,7 +17,6 @@ jobs:
       qt_root_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
       target_folder: 'QtQuick3D-Tools'
       source_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/build/example'
-      aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -41,6 +40,7 @@ jobs:
       - name: Install Qt
         uses: Kidev/install-qt-action@v4.4.3
         with:
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
           version: '6.8.1'
           target: 'desktop'
           arch: 'linux_gcc_64'
