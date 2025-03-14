@@ -54,7 +54,7 @@ jobs:
           chmod 777 '/home/runner/.local/share' || true
 
       - name: Install Qt
-        uses: Kidev/install-qt-action@v4.4.3
+        uses: Kidev/install-qt-action@v4.4.4
         continue-on-error: true
         with:
           aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@fix_official_tty'
