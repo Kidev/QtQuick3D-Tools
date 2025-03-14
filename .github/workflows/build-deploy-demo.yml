@@ -40,7 +40,7 @@ jobs:
       - name: Debug
         shell: bash
         continue-on-error: true
-        run:
+        run: |
           ls -la '/home/runner/.local/share/Qt/'
           cat '/home/runner/.local/share/Qt/qtaccount.ini'
           ls -la '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/'
@@ -70,7 +70,7 @@ jobs:
       - name: Debug
         shell: bash
         continue-on-error: true
-        run:
+        run: |
           ls -la '/home/runner/.local/share/Qt/'
           cat '/home/runner/.local/share/Qt/qtaccount.ini'
           ls -la '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/'
