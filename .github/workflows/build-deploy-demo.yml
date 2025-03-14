@@ -41,17 +41,17 @@ jobs:
         shell: bash
         continue-on-error: true
         run:
-          ls -la /home/runner/.local/share/Qt/
-          cat /home/runner/.local/share/Qt/qtaccount.ini
-          ls -la /home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/
-          ls -la /home/runner/.local/share/aqt/tmp/
-          ls -la /home/runner/.local/share/aqt/cache/
-          ls -la /home/runner/.local/share/aqt/cache/desktop/
-          ls -la /home/runner/.local/share/aqt/cache/desktop/linux_gcc_64
-          ls -la /home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1
-          cat /home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1/packages.json
-          mkdir -p /home/runner/.local/share
-          chmod 777 /home/runner/.local/share
+          ls -la '/home/runner/.local/share/Qt/'
+          cat '/home/runner/.local/share/Qt/qtaccount.ini'
+          ls -la '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/'
+          ls -la '/home/runner/.local/share/aqt/tmp/'
+          ls -la '/home/runner/.local/share/aqt/cache/'
+          ls -la '/home/runner/.local/share/aqt/cache/desktop/'
+          ls -la '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64'
+          ls -la '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1'
+          cat '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1/packages.json'
+          mkdir -p '/home/runner/.local/share'
+          chmod 777 '/home/runner/.local/share'
 
       - name: Install Qt
         uses: Kidev/install-qt-action@v4.4.3
@@ -71,16 +71,16 @@ jobs:
         shell: bash
         continue-on-error: true
         run:
-          ls -la /home/runner/.local/share/Qt/
-          cat /home/runner/.local/share/Qt/qtaccount.ini
-          ls -la /home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/
-          ls -la /home/runner/.local/share/aqt/tmp/
-          ls -la /home/runner/.local/share/aqt/cache/
-          ls -la /home/runner/.local/share/aqt/cache/desktop/
-          ls -la /home/runner/.local/share/aqt/cache/desktop/linux_gcc_64
-          ls -la /home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1
-          cat /home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1/packages.json
-          
+          ls -la '/home/runner/.local/share/Qt/'
+          cat '/home/runner/.local/share/Qt/qtaccount.ini'
+          ls -la '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/'
+          ls -la '/home/runner/.local/share/aqt/tmp/'
+          ls -la '/home/runner/.local/share/aqt/cache/'
+          ls -la '/home/runner/.local/share/aqt/cache/desktop/'
+          ls -la '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64'
+          ls -la '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1'
+          cat '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1/packages.json'
+
       - name: CMake Build
         shell: bash
         run: |
