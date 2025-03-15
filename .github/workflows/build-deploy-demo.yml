@@ -37,13 +37,6 @@ jobs:
       - name: Install ninja-build tool
         uses: seanmiddleditch/gha-setup-ninja@v5
 
-      - name: Debug
-        shell: bash
-        continue-on-error: true
-        run: |
-          mkdir -p '/home/runner/.local/share' || true
-          chmod 777 '/home/runner/.local/share' || true
-
       - name: Install Qt
         uses: Kidev/install-qt-action@v4.4.3
         with:
