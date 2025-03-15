@@ -29,7 +29,7 @@ jobs:
       - name: Install tools
         shell: bash
         run: |
-          sudo apt-get -y install jq lftp brotli expect
+          sudo apt-get -y install jq lftp brotli expect libxcb-xinerama0
 
       - name: Update CMake
         uses: lukka/get-cmake@latest
