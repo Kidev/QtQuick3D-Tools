@@ -62,8 +62,8 @@ jobs:
           target: 'desktop'
           arch: 'linux_gcc_64'
           use-official: true
-          email: ${{ secrets.QT_USERNAME }}
-          pw: ${{ secrets.QT_PASSWORD }}
+          email: ${{ secrets.QT_USERNAME2 }}
+          pw: ${{ secrets.QT_PASSWORD2 }}
           modules: ${{ env.qt_modules }}
           dir: ${{ env.qt_root_folder }}
 
