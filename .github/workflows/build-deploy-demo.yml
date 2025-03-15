@@ -41,23 +41,13 @@ jobs:
         shell: bash
         continue-on-error: true
         run: |
-          ls -la '/home/runner/.local/share/Qt/' || true
-          cat '/home/runner/.local/share/Qt/qtaccount.ini' || true
-          ls -la '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/' || true
-          ls -la '/home/runner/.local/share/aqt/tmp/' || true
-          ls -la '/home/runner/.local/share/aqt/cache/' || true
-          ls -la '/home/runner/.local/share/aqt/cache/desktop/' || true
-          ls -la '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64' || true
-          ls -la '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1' || true
-          cat '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1/packages.json' || true
           mkdir -p '/home/runner/.local/share' || true
           chmod 777 '/home/runner/.local/share' || true
 
       - name: Install Qt
         uses: Kidev/install-qt-action@v4.4.3
-        continue-on-error: true
         with:
-          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@master_upstream'
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
           version: '6.8.1'
           target: 'desktop'
           arch: 'linux_gcc_64'
@@ -66,20 +56,6 @@ jobs:
           pw: ${{ secrets.QT_PASSWORD2 }}
           modules: ${{ env.qt_modules }}
           dir: ${{ env.qt_root_folder }}
-
-      - name: Debug
-        shell: bash
-        continue-on-error: true
-        run: |
-          ls -la '/home/runner/.local/share/Qt/' || true
-          cat '/home/runner/.local/share/Qt/qtaccount.ini' || true
-          ls -la '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/' || true
-          ls -la '/home/runner/.local/share/aqt/tmp/' || true
-          ls -la '/home/runner/.local/share/aqt/cache/' || true
-          ls -la '/home/runner/.local/share/aqt/cache/desktop/' || true
-          ls -la '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64' || true
-          ls -la '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1' || true
-          cat '/home/runner/.local/share/aqt/cache/desktop/linux_gcc_64/6.8.1/packages.json' || true
   
       - name: CMake Build
         shell: bash
