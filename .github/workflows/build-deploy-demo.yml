@@ -57,7 +57,7 @@ jobs:
         uses: Kidev/install-qt-action@v4.4.3
         continue-on-error: true
         with:
-          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@fix_official_tty'
+          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@master_upstream'
           version: '6.8.1'
           target: 'desktop'
           arch: 'linux_gcc_64'
