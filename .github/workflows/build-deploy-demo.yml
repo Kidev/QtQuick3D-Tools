@@ -12,7 +12,7 @@ jobs:
       qt_version: '6.8.1'
       qt_host_arch: 'gcc_64'
       qt_target_arch: 'wasm_singlethread'
-      qt_modules: 'qtquick3d'
+      qt_modules: 'qtquick3d qtshadertools'
       qt_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/Qt'
       qt_root_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
       target_folder: 'QtQuick3D-Tools'
@@ -38,11 +38,12 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@v5
 
       - name: Install Qt
-        uses: Kidev/install-qt-action@v4.4.3
+        uses: Kidev/install-qt-action@v4.4.6
         with:
           version: '6.8.1'
-          target: 'desktop'
-          arch: 'linux_gcc_64'
+          host: 'all_os'
+          target: 'wasm'
+          arch: 'wasm_singlethread'
           use-official: false
           email: ${{ secrets.QT_USERNAME2 }}
           pw: ${{ secrets.QT_PASSWORD2 }}
