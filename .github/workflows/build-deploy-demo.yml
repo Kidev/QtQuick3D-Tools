@@ -12,7 +12,7 @@ jobs:
       qt_version: '6.8.1'
       qt_host_arch: 'gcc_64'
       qt_target_arch: 'wasm_singlethread'
-      qt_modules: 'qtquick3d qtshadertools'
+      qt_modules: 'qtquick3d qtshadertools wasm_singlethread'
       qt_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/Qt'
       qt_root_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
       target_folder: 'QtQuick3D-Tools'
@@ -40,11 +40,11 @@ jobs:
       - name: Install Qt
         uses: Kidev/install-qt-action@v4.4.6
         with:
-          version: '6.8.1'
+          version: '6.8.3'
           host: 'all_os'
           target: 'wasm'
           arch: 'wasm_singlethread'
-          use-official: false
+          use-official: true
           email: ${{ secrets.QT_USERNAME2 }}
           pw: ${{ secrets.QT_PASSWORD2 }}
           modules: ${{ env.qt_modules }}
