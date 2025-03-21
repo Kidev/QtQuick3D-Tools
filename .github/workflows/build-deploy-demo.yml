@@ -43,7 +43,7 @@ jobs:
           version: '6.8.3'
           host: 'all_os'
           target: 'desktop'
-          arch: 'wasm_singlethread'
+          arch: 'linux_gcc_64'
           use-official: true
           email: ${{ secrets.QT_USERNAME2 }}
           pw: ${{ secrets.QT_PASSWORD2 }}
