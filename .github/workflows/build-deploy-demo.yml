@@ -38,7 +38,7 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@v5
 
       - name: Install Qt
-        uses: Kidev/install-qt-action@v4.5.0
+        uses: Kidev/install-qt-action@v4.5.1
         with:
           version: '6.8.2'
           host: 'all_os'
