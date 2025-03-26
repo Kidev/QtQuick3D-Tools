@@ -41,16 +41,15 @@ jobs:
         uses: Kidev/install-qt-action@v4.5.0
         with:
           version: '6.8.2'
+          host: 'linux'
           target: 'desktop'
           arch: 'linux_gcc_64'
-          modules: 'wasm_singlethread qtquick3d qtshadertools'
+          modules: 'wasm_singlethread qtquick3d'
           dir: ${{ env.qt_root_folder }}
           use-official: true
           email: ${{ secrets.QT_USERNAME }}
           pw: ${{ secrets.QT_PASSWORD }}
           aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_ux'
-          cache: true
-          cache-key-prefix: 'install-qt-action-test2'
 
 #      - name: Install Qt
 #        uses: Kidev/install-qt-action@v4.5.0
