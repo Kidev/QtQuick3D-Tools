@@ -47,6 +47,8 @@ jobs:
           modules: 'qtquick3d'
           dir: ${{ env.qt_root_folder }}
           aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_ux'
+          cache: true
+          cache-key-prefix: 'install-qt-action-test'
 
 #      - name: Install Qt
 #        uses: Kidev/install-qt-action@v4.5.0
