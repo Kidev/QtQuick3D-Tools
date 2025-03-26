@@ -37,21 +37,32 @@ jobs:
       - name: Install ninja-build tool
         uses: seanmiddleditch/gha-setup-ninja@v5
 
-      - name: Install Qt
-        uses: Kidev/install-qt-action@v4.5.0
+      - name: Install Qt for host and WASM
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.8.2'
           host: 'all_os'
-          cache: true
-          cache-key-prefix: 'install-qt-action-447'
           target: 'wasm'
           arch: 'wasm_singlethread'
-          use-official: false
-          email: ${{ secrets.QT_USERNAME2 }}
-          pw: ${{ secrets.QT_PASSWORD2 }}
           modules: 'qtquick3d'
           dir: ${{ env.qt_root_folder }}
           aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_ux'
+
+#      - name: Install Qt
+#        uses: Kidev/install-qt-action@v4.5.0
+#        with:
+#          version: '6.8.2'
+#          host: 'all_os'
+#          cache: true
+#          cache-key-prefix: 'install-qt-action-447'
+#          target: 'linux_gcc_64'
+#          arch: 'wasm_singlethread'
+#          use-official: false
+#          email: ${{ secrets.QT_USERNAME2 }}
+#          pw: ${{ secrets.QT_PASSWORD2 }}
+#          modules: 'qtquick3d'
+#          dir: ${{ env.qt_root_folder }}
+#          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_ux'
   
       - name: CMake Build
         shell: bash
