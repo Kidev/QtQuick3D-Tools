@@ -9,7 +9,7 @@ jobs:
     name: "Build and deploy"
     env:
       workspace_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
-      qt_version: '6.8.3'
+      qt_version: '6.8.2'
       qt_host_arch: 'gcc_64'
       qt_target_arch: 'wasm_singlethread'
       qt_modules: 'qtquick3d qtshadertools'
