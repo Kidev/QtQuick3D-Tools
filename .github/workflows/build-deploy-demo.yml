@@ -49,6 +49,7 @@ jobs:
           aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_ux'
           cache: true
           cache-key-prefix: 'install-qt-action-test'
+          extra: '--autodesktop'
 
 #      - name: Install Qt
 #        uses: Kidev/install-qt-action@v4.5.0
