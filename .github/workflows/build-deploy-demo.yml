@@ -49,7 +49,7 @@ jobs:
           use-official: true
           email: ${{ secrets.QT_USERNAME }}
           pw: ${{ secrets.QT_PASSWORD }}
-          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_ux'
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
 
 #      - name: Install Qt
 #        uses: Kidev/install-qt-action@v4.5.0
