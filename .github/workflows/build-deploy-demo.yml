@@ -54,7 +54,7 @@ jobs:
           use-official: true
           email: ${{ secrets.QT_USERNAME }}
           pw: ${{ secrets.QT_PASSWORD }}
-          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
+          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_rights'
 
 
 #      - name: Install Qt
@@ -72,6 +72,7 @@ jobs:
 #          modules: 'qtquick3d'
 #          dir: ${{ env.qt_root_folder }}
 #          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_ux'
+#          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
   
       - name: CMake Build
         shell: bash
