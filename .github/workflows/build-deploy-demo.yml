@@ -25,11 +25,6 @@ jobs:
           fetch-depth: 1
           submodules: 'recursive'
           lfs: 'true'
-
-      - name: Run a multi-line script
-        shell: 'script -q -e -c "bash {0}"'
-        run: |
-          perl -E 'say "Is STDOUT a TTY?: ", -t STDOUT ? "yes" : "no"'
  
       - name: Install tools
         shell: bash
@@ -43,7 +38,7 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@v5
 
       - name: Install Qt for host and WASM
-        uses: Kidev/install-qt-action@v4.5.0
+        uses: Kidev/install-qt-action@v4.6.0
         with:
           version: '6.8.2'
           host: 'linux'
@@ -54,7 +49,7 @@ jobs:
           use-official: true
           email: ${{ secrets.QT_USERNAME }}
           pw: ${{ secrets.QT_PASSWORD }}
-          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_rights'
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
 
 
 #      - name: Install Qt
