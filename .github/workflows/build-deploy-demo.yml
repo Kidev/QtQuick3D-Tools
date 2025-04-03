@@ -37,17 +37,18 @@ jobs:
       - name: Install ninja-build tool
         uses: seanmiddleditch/gha-setup-ninja@v5
 
-      - name: Install Qt for host and WASM
+      - name: Install Qt
         uses: Kidev/install-qt-action@v4.5.0
         with:
           version: '6.8.2'
           host: 'all_os'
-          target: 'wasm'
-          arch: 'wasm_singlethread'
-          modules: 'qtquick3d qtshadertools'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          use-official: true
+          email: ${{ secrets.QT_USERNAME2 }}
+          pw: ${{ secrets.QT_PASSWORD2 }}
+          modules: ${{ env.qt_modules }}
           dir: ${{ env.qt_root_folder }}
-          cache: true
-          cache-key-prefix: 'install-qt-action-test'
           aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
   
       - name: CMake Build
