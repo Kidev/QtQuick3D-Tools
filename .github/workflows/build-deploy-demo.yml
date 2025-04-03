@@ -37,19 +37,19 @@ jobs:
       - name: Install ninja-build tool
         uses: seanmiddleditch/gha-setup-ninja@v5
 
-      - name: Install Qt for host and WASM
-        uses: Kidev/install-qt-action@v4.6.0
+      - name: Install Qt
+        uses: Kidev/install-qt-action@v4.4.7
         with:
           version: '6.8.2'
-          host: 'linux'
+          host: 'all_os'
           target: 'desktop'
           arch: 'linux_gcc_64'
-          modules: 'wasm_singlethread qtquick3d'
-          dir: ${{ env.qt_root_folder }}
           use-official: true
-          email: ${{ secrets.QT_USERNAME }}
-          pw: ${{ secrets.QT_PASSWORD }}
-          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
+          email: ${{ secrets.QT_USERNAME2 }}
+          pw: ${{ secrets.QT_PASSWORD2 }}
+          modules: ${{ env.qt_modules }}
+          dir: ${{ env.qt_root_folder }}
+          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@official_ux'
 
 
 #      - name: Install Qt
