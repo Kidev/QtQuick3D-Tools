@@ -9,7 +9,7 @@ jobs:
     name: "Build tests"
     runs-on: ubuntu-24.04
     steps:
-      - name: Install Qt
+      - name: Install Qt 
         uses: jurplel/install-qt-action@v4
         with:
           version: '5.15.2'
