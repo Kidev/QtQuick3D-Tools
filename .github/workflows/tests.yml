@@ -13,7 +13,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: '5.15.2'
-          aqtversion: '>=3.2.*'
+          aqtversion: '==3.2.*'
           host: 'linux'
           target: 'desktop'
           arch: 'gcc_64'
