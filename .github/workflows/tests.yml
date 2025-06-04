@@ -18,3 +18,6 @@ jobs:
           arch: 'gcc_64'
           tools: 'tools_ifw'
           aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@tools_ifw_fix'
+      - shell: bash
+        run: |
+          ls -la /home/runner/work/QtQuick3D-Tools/Qt/Tools/QtInstallerFramework
