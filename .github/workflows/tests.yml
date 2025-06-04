@@ -17,4 +17,4 @@ jobs:
           target: 'desktop'
           arch: 'gcc_64'
           tools: 'tools_ifw'
-          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@fix_ifw'
+          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@tools_ifw_fix'
