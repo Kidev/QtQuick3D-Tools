@@ -12,10 +12,9 @@ jobs:
       - name: Install Qt 
         uses: jurplel/install-qt-action@v4
         with:
-          version: '5.15.2'
-          aqtversion: '==3.2.*'
+          version: '6.5.1'
           host: 'linux'
           target: 'desktop'
           arch: 'gcc_64'
-          modules: 'qtcharts qtvirtualkeyboard'
-          extra: '-b https://mirrors.dotsrc.org/qtproject'
+          tools: 'tools_ifw'
+          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@3b51e7c24b7c9f8cc21f3d7478cc18c8178dc8a6'
