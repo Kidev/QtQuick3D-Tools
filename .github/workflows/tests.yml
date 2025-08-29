@@ -7,17 +7,16 @@ on:
 jobs: 
   build-and-deploy:
     name: "Build tests"
-    runs-on: ubuntu-24.04
+    runs-on: windows-11-arm64
     steps:
       - name: Install Qt 
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.5.1'
-          host: 'linux'
+          version: '6.10.0'
+          host: 'windows'
           target: 'desktop'
-          arch: 'gcc_64'
-          tools: 'tools_ifw'
-          aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@tools_ifw_fix'
-      - shell: bash
-        run: |
-          ls -la /home/runner/work/QtQuick3D-Tools/Qt/Tools/QtInstallerFramework
+          arch: 'win64_msvc2022_arm64_cross_compiled'
+          modules: 'qtshadertools qtimageformats'
+          use-official: true
+          email: ${{ secrets.QT_USERNAME2 }}
+          pw: ${{ secrets.QT_PASSWORD2 }}
