@@ -1,8 +1,7 @@
 name: Build demo
 
 on: 
-  push:
-    branches: "main"
+  workflow_dispatch:
  
 jobs: 
   build-and-deploy:
