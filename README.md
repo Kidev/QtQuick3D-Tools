@@ -74,6 +74,9 @@ QtQuick3D Tools is a QML module that attaches 2D overlays (labels, icons, contro
     SpatialItem {
         id: bubble
 
+        readonly property color borderColor: bubble.hovered ? "black" : "white"
+        readonly property rect bubbleRect: Qt.rect(bubble.linkerEnd.x - bubble.size.width * bubble.scaleFactor / 2, bubble.linkerEnd.y - bubble.size.height * bubble.scaleFactor / 2, bubble.size.width * bubble.scaleFactor, bubble.size.height * bubble.scaleFactor)
+
         hoverEnabled: true
         mouseEnabled: true
         mouseLinkerEnabled: true
@@ -82,39 +85,75 @@ QtQuick3D Tools is a QML module that attaches 2D overlays (labels, icons, contro
         target: targetModel
         view: view3D
 
-        linker: ShapePath {
-            capStyle: ShapePath.FlatCap
-            fillColor: "white"
-            joinStyle: ShapePath.BevelJoin
-            startX: bubble.linkerEnd.x - 20 * bubble.scaleFactor
-            startY: bubble.linkerEnd.y
-            strokeColor: bubble.hovered ? "black" : "white"
-            strokeWidth: 2 * bubble.scaleFactor
+        // Both outlines are stroked at twice the border width, then both fills cover their inner half,
+        // so a single outline surrounds the bubble and its tail.
+        linker: [
+            ShapePath {
+                fillColor: "transparent"
+                strokeColor: bubble.borderColor
+                strokeWidth: 4 * bubble.scaleFactor
 
-            PathLine {
-                x: bubble.linkerStart.x
-                y: bubble.linkerStart.y
+                PathRectangle {
+                    height: bubble.bubbleRect.height
+                    radius: 25 * bubble.scaleFactor
+                    width: bubble.bubbleRect.width
+                    x: bubble.bubbleRect.x
+                    y: bubble.bubbleRect.y
+                }
+            },
+            ShapePath {
+                fillColor: "transparent"
+                joinStyle: ShapePath.RoundJoin
+                startX: bubble.linkerEnd.x - 20 * bubble.scaleFactor
+                startY: bubble.linkerEnd.y
+                strokeColor: bubble.borderColor
+                strokeWidth: 4 * bubble.scaleFactor
+
+                PathLine {
+                    x: bubble.linkerStart.x
+                    y: bubble.linkerStart.y
+                }
+
+                PathLine {
+                    x: bubble.linkerEnd.x + 20 * bubble.scaleFactor
+                    y: bubble.linkerEnd.y
+                }
+            },
+            ShapePath {
+                fillColor: "white"
+                strokeColor: "transparent"
+
+                PathRectangle {
+                    height: bubble.bubbleRect.height
+                    radius: 25 * bubble.scaleFactor
+                    width: bubble.bubbleRect.width
+                    x: bubble.bubbleRect.x
+                    y: bubble.bubbleRect.y
+                }
+            },
+            ShapePath {
+                fillColor: "white"
+                startX: bubble.linkerEnd.x - 20 * bubble.scaleFactor
+                startY: bubble.linkerEnd.y
+                strokeColor: "transparent"
+
+                PathLine {
+                    x: bubble.linkerStart.x
+                    y: bubble.linkerStart.y
+                }
+
+                PathLine {
+                    x: bubble.linkerEnd.x + 20 * bubble.scaleFactor
+                    y: bubble.linkerEnd.y
+                }
             }
+        ]
 
-            PathLine {
-                x: bubble.linkerEnd.x + 20 * bubble.scaleFactor
-                y: bubble.linkerEnd.y
-            }
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            border.color: bubble.hovered ? "black" : "white"
-            border.width: 2
-            color: "white"
-            radius: 25
-
-            Text {
-                anchors.centerIn: parent
-                color: "black"
-                font.pixelSize: 15
-                text: "Hello!"
-            }
+        Text {
+            anchors.centerIn: parent
+            color: "black"
+            font.pixelSize: 15
+            text: "Hello!"
         }
     }
     ```

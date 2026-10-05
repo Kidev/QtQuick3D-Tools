@@ -354,6 +354,13 @@ Window {
     SpatialItem {
         id: spatialNameTag
 
+        readonly property real bubbleBorder: 2
+        readonly property color bubbleBorderColor: spatialNameTag.hovered ? "black" : "white"
+        readonly property real bubbleRadius: 25
+        // The bubble in View3D coordinates: the overlay is centered on linkerEnd + offsetLinkEnd2D and scaled.
+        readonly property rect bubbleRect: Qt.rect(spatialNameTag.linkerEnd.x + spatialNameTag.offsetLinkEnd2D.x - spatialNameTag.size.width * spatialNameTag.scaleFactor / 2, spatialNameTag.linkerEnd.y + spatialNameTag.offsetLinkEnd2D.y - spatialNameTag.size.height * spatialNameTag.scaleFactor / 2, spatialNameTag.size.width * spatialNameTag.scaleFactor, spatialNameTag.size.height * spatialNameTag.scaleFactor)
+        readonly property real tailBaseY: spatialNameTag.bubbleRect.y + spatialNameTag.bubbleRect.height - 2 * spatialNameTag.bubbleBorder * spatialNameTag.scaleFactor
+        readonly property real tailHalfWidth: 0.1 * spatialNameTag.bubbleRect.width
         property bool textClicked: false
 
         closeUpScaling: true
@@ -370,19 +377,33 @@ Window {
         offsetLinkStart2D: Qt.vector2d(0, 0)
         showLinker: true
         size: Qt.size(200, 50)
-        stackingOrderLinker: spatialNameTag.linkerStart.y <= spatialNameTag.linkerEnd.y + uiRectangle.height * spatialNameTag.scaleFactor / 2 ? -1 : 1
+        stackingOrderLinker: -1
         target: targetHuman
         view: view3D
 
+        // Bubble and tail form one outlined shape: both outlines are stroked at twice the border width, then both
+        // fills cover the inner half of every outline, so only the outer edge of their union remains.
         linker: [
             ShapePath {
-                capStyle: ShapePath.FlatCap
-                fillColor: "white"
-                joinStyle: ShapePath.BevelJoin
-                startX: spatialNameTag.linkerEnd.x - (0.1 * uiRectangle.width) * spatialNameTag.scaleFactor
-                startY: spatialNameTag.linkerEnd.y - 1 - (uiRectangle.border.width * spatialNameTag.scaleFactor)
-                strokeColor: uiRectangle.border.color
-                strokeWidth: uiRectangle.border.width * spatialNameTag.scaleFactor
+                fillColor: "transparent"
+                strokeColor: spatialNameTag.bubbleBorderColor
+                strokeWidth: 2 * spatialNameTag.bubbleBorder * spatialNameTag.scaleFactor
+
+                PathRectangle {
+                    height: spatialNameTag.bubbleRect.height
+                    radius: spatialNameTag.bubbleRadius * spatialNameTag.scaleFactor
+                    width: spatialNameTag.bubbleRect.width
+                    x: spatialNameTag.bubbleRect.x
+                    y: spatialNameTag.bubbleRect.y
+                }
+            },
+            ShapePath {
+                fillColor: "transparent"
+                joinStyle: ShapePath.RoundJoin
+                startX: spatialNameTag.linkerEnd.x - spatialNameTag.tailHalfWidth
+                startY: spatialNameTag.tailBaseY
+                strokeColor: spatialNameTag.bubbleBorderColor
+                strokeWidth: 2 * spatialNameTag.bubbleBorder * spatialNameTag.scaleFactor
 
                 PathLine {
                     x: spatialNameTag.linkerStart.x
@@ -390,8 +411,41 @@ Window {
                 }
 
                 PathLine {
-                    x: spatialNameTag.linkerEnd.x + (0.1 * uiRectangle.width) * spatialNameTag.scaleFactor
-                    y: spatialNameTag.linkerEnd.y - 1 - (uiRectangle.border.width * spatialNameTag.scaleFactor)
+                    x: spatialNameTag.linkerEnd.x + spatialNameTag.tailHalfWidth
+                    y: spatialNameTag.tailBaseY
+                }
+
+                PathLine {
+                    x: spatialNameTag.linkerEnd.x - spatialNameTag.tailHalfWidth
+                    y: spatialNameTag.tailBaseY
+                }
+            },
+            ShapePath {
+                fillColor: "white"
+                strokeColor: "transparent"
+
+                PathRectangle {
+                    height: spatialNameTag.bubbleRect.height
+                    radius: spatialNameTag.bubbleRadius * spatialNameTag.scaleFactor
+                    width: spatialNameTag.bubbleRect.width
+                    x: spatialNameTag.bubbleRect.x
+                    y: spatialNameTag.bubbleRect.y
+                }
+            },
+            ShapePath {
+                fillColor: "white"
+                startX: spatialNameTag.linkerEnd.x - spatialNameTag.tailHalfWidth
+                startY: spatialNameTag.tailBaseY
+                strokeColor: "transparent"
+
+                PathLine {
+                    x: spatialNameTag.linkerStart.x
+                    y: spatialNameTag.linkerStart.y
+                }
+
+                PathLine {
+                    x: spatialNameTag.linkerEnd.x + spatialNameTag.tailHalfWidth
+                    y: spatialNameTag.tailBaseY
                 }
             }
         ]
@@ -403,23 +457,13 @@ Window {
             spatialNameTag.textClicked = !spatialNameTag.textClicked;
         }
 
-        Rectangle {
-            id: uiRectangle
-
-            anchors.fill: parent
-            border.color: spatialNameTag.hovered ? "black" : "white"
-            border.width: 2
-            color: "white"
-            radius: 25
-
-            Text {
-                anchors.centerIn: parent
-                color: "black"
-                font.pixelSize: 13.0
-                horizontalAlignment: Text.AlignHCenter
-                text: !spatialNameTag.textClicked ? "You spin me right 'round\nbaby, right 'round\n" : "Like a record, baby\nright 'round, 'round, 'round"
-                verticalAlignment: Text.AlignVCenter
-            }
+        Text {
+            anchors.centerIn: parent
+            color: "black"
+            font.pixelSize: 13.0
+            horizontalAlignment: Text.AlignHCenter
+            text: !spatialNameTag.textClicked ? "You spin me right 'round\nbaby, right 'round\n" : "Like a record, baby\nright 'round, 'round, 'round"
+            verticalAlignment: Text.AlignVCenter
         }
     }
 
