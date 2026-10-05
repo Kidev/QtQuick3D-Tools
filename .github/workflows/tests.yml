@@ -1,0 +1,48 @@
+name: Build tests
+
+on: 
+  workflow_dispatch:
+ 
+jobs: 
+  build-and-test:
+    name: "Build tests"
+    env:
+      qt_version: '6.11.3'
+      qt_host: 'windows_arm64'
+      qt_arch: 'win64_msvc2022_arm64'
+      qt_modules: 'qtquick3d qtshadertools qtimageformats'
+    runs-on: windows-11-arm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          submodules: 'recursive'
+          lfs: 'true'
+
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: arm64
+ 
+      - name: Install Qt 
+        uses: jurplel/install-qt-action@v4.4.1
+        with:
+          version: ${{ env.qt_version }}
+          host: ${{ env.qt_host }}
+          target: 'desktop'
+          arch: ${{ env.qt_arch }}
+          modules: ${{ env.qt_modules }}
+          use-official: true
+          email: ${{ secrets.QT_USERNAME2 }}
+          pw: ${{ secrets.QT_PASSWORD2 }}
+  
+      - name: CMake Build
+        shell: bash
+        run: |
+          cmake -G Ninja -S . -B build -DCMAKE_PREFIX_PATH="${QT_ROOT_DIR}" -DBUILD_EXAMPLE=ON -DBUILD_TESTS=ON
+          cmake --build build
+
+      - name: Run tests
+        shell: bash
+        run: ctest --test-dir build --output-on-failure

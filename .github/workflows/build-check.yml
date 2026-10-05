@@ -1,0 +1,66 @@
+name: Build demo
+
+on: 
+  workflow_dispatch:
+ 
+jobs: 
+  build-and-deploy:
+    name: "Build demo"
+    env:
+      workspace_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
+      qt_version: '6.11.3'
+      qt_host_arch: 'gcc_64'
+      qt_target_arch: 'linux_gcc_64'
+      qt_modules: 'qtquick3d qtshadertools'
+      qt_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/Qt'
+      qt_root_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
+      target_folder: 'QtQuick3D-Tools'
+      source_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/build/example'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          submodules: 'recursive'
+          lfs: 'true'
+ 
+      - name: Install tools
+        shell: bash
+        run: |
+          sudo apt-get -y install jq expect xvfb
+
+      - name: Update CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Install ninja-build tool
+        uses: seanmiddleditch/gha-setup-ninja@v6
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4.4.1
+        with:
+          version: ${{ env.qt_version }}
+          host: 'linux'
+          target: 'desktop'
+          arch: ${{ env.qt_target_arch }}
+          use-official: true
+          email: ${{ secrets.QT_USERNAME2 }}
+          pw: ${{ secrets.QT_PASSWORD2 }}
+          modules: ${{ env.qt_modules }}
+          dir: ${{ env.qt_root_folder }}
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
+  
+      - name: CMake Build
+        shell: bash
+        run: |
+          make desktop \
+            QT_ROOT=${{ env.qt_root }} \
+            QT_VERSION=${{ env.qt_version }} \
+            QT_ARCH=${{ env.qt_host_arch }}
+
+      - name: Run tests
+        shell: bash
+        run: |
+          cmake -S . -B build -DBUILD_TESTS=ON
+          cmake --build build
+          xvfb-run -a ctest --test-dir build --output-on-failure

@@ -1,0 +1,69 @@
+name: Build and deploy demo
+
+on: 
+  workflow_dispatch:
+ 
+jobs: 
+  build-and-deploy:
+    name: "Build and deploy"
+    env:
+      workspace_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
+      qt_version: '6.11.3'
+      qt_host_arch: 'gcc_64'
+      qt_target_arch: 'wasm_singlethread'
+      qt_modules: 'wasm_singlethread qtquick3d qtshadertools'
+      qt_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/Qt'
+      qt_root_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
+      target_folder: 'QtQuick3D-Tools'
+      source_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/build/example'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          submodules: 'recursive'
+          lfs: 'true'
+ 
+      - name: Install tools
+        shell: bash
+        run: |
+          sudo apt-get -y install jq lftp brotli expect 
+
+      - name: Update CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Install ninja-build tool
+        uses: seanmiddleditch/gha-setup-ninja@v6
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4.4.1
+        with:
+          version: ${{ env.qt_version }}
+          host: 'linux'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          use-official: true
+          email: ${{ secrets.QT_USERNAME2 }}
+          pw: ${{ secrets.QT_PASSWORD2 }}
+          modules: ${{ env.qt_modules }}
+          dir: ${{ env.qt_root_folder }}
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
+  
+      - name: CMake Build
+        shell: bash
+        run: |
+          make web \
+            QT_ROOT=${{ env.qt_root }} \
+            QT_VERSION=${{ env.qt_version }} \
+            QT_HOST_ARCH=${{ env.qt_host_arch }} \
+            QT_TARGET_ARCH=${{ env.qt_target_arch }}
+
+      - name: Upload to FTP
+        shell: bash
+        run: |
+          lftp -u "${{ secrets.FTP_UPLOAD_USER }}","${{ secrets.FTP_UPLOAD_PW }}" ${{ secrets.FTP_UPLOAD_IP }} <<EOF
+          set ssl:verify-certificate no
+          mirror -R --only-newer --verbose ${{ env.source_folder }} ${{ env.target_folder }}
+          quit
+          EOF
