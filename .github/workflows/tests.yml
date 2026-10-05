@@ -20,11 +20,6 @@ jobs:
           submodules: 'recursive'
           lfs: 'true'
 
-      - name: Set up MSVC
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: arm64
- 
       - name: Install Qt 
         uses: jurplel/install-qt-action@v4.4.1
         with:
@@ -33,16 +28,13 @@ jobs:
           target: 'desktop'
           arch: ${{ env.qt_arch }}
           modules: ${{ env.qt_modules }}
-          use-official: true
-          email: ${{ secrets.QT_USERNAME2 }}
-          pw: ${{ secrets.QT_PASSWORD2 }}
   
       - name: CMake Build
         shell: bash
         run: |
-          cmake -G Ninja -S . -B build -DCMAKE_PREFIX_PATH="${QT_ROOT_DIR}" -DBUILD_EXAMPLE=ON -DBUILD_TESTS=ON
-          cmake --build build
+          cmake -S . -B build -A ARM64 -DCMAKE_PREFIX_PATH="${QT_ROOT_DIR}" -DBUILD_EXAMPLE=ON -DBUILD_TESTS=ON
+          cmake --build build --config Release
 
       - name: Run tests
         shell: bash
-        run: ctest --test-dir build --output-on-failure
+        run: ctest --test-dir build -C Release --output-on-failure

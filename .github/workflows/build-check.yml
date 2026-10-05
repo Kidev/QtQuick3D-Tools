@@ -30,11 +30,8 @@ jobs:
         run: |
           sudo apt-get -y install jq expect xvfb
 
-      - name: Update CMake
+      - name: Install CMake and Ninja
         uses: lukka/get-cmake@latest
-
-      - name: Install ninja-build tool
-        uses: seanmiddleditch/gha-setup-ninja@v6
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v4.4.1
@@ -43,9 +40,6 @@ jobs:
           host: 'linux'
           target: 'desktop'
           arch: ${{ env.qt_target_arch }}
-          use-official: true
-          email: ${{ secrets.QT_USERNAME2 }}
-          pw: ${{ secrets.QT_PASSWORD2 }}
           modules: ${{ env.qt_modules }}
           dir: ${{ env.qt_root_folder }}
           aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'

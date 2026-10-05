@@ -11,7 +11,7 @@ jobs:
       qt_version: '6.11.3'
       qt_host_arch: 'gcc_64'
       qt_target_arch: 'wasm_singlethread'
-      qt_modules: 'wasm_singlethread qtquick3d qtshadertools'
+      qt_modules: 'qtquick3d qtshadertools'
       qt_root: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools/Qt'
       qt_root_folder: '/home/runner/work/QtQuick3D-Tools/QtQuick3D-Tools'
       target_folder: 'QtQuick3D-Tools'
@@ -30,22 +30,16 @@ jobs:
         run: |
           sudo apt-get -y install jq lftp brotli expect 
 
-      - name: Update CMake
+      - name: Install CMake and Ninja
         uses: lukka/get-cmake@latest
-
-      - name: Install ninja-build tool
-        uses: seanmiddleditch/gha-setup-ninja@v6
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v4.4.1
         with:
           version: ${{ env.qt_version }}
-          host: 'linux'
-          target: 'desktop'
-          arch: 'linux_gcc_64'
-          use-official: true
-          email: ${{ secrets.QT_USERNAME2 }}
-          pw: ${{ secrets.QT_PASSWORD2 }}
+          host: 'all_os'
+          target: 'wasm'
+          arch: ${{ env.qt_target_arch }}
           modules: ${{ env.qt_modules }}
           dir: ${{ env.qt_root_folder }}
           aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@master'
