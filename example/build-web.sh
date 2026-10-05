@@ -73,6 +73,16 @@ sed -i 's#undefined ? ` ()` :#undefined ? `<br><span style="color:\#ff0000">Erro
 sed -i 's/\/\*.*\*\///g' build/example/index.html
 sed -i '/<!--/,/-->/d' build/example/index.html
 
+# The build ID in every script and wasm URL keeps a browser from pairing a cached exampleExec.js with a newer wasm.
+BUILD_ID=$(date -u +%Y%m%d%H%M%S)
+sed -i "s#<script src=\"exampleExec.js\"></script>#<script src=\"exampleExec.js?v=${BUILD_ID}\"></script>#" build/example/index.html
+sed -i "s#src=\"qtloader.js\"#src=\"qtloader.js?v=${BUILD_ID}\"#" build/example/index.html
+sed -i "s#const instance = await qtLoad({#const instance = await qtLoad({ locateFile: path => \`\${path}?v=${BUILD_ID}\`,#" build/example/index.html
+if [ "$(grep -c "?v=${BUILD_ID}" build/example/index.html)" != "3" ]; then
+    echo "index.html: the build ID was not applied to all three URLs"
+    exit 1
+fi
+
 rm -rf build/example/.[\!.]* build/example/.?*
 rm -rf build/example/CMakeFiles
 rm -rf build/example/example
