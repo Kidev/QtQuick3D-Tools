@@ -484,7 +484,7 @@ Window {
             cursorShape: Qt.PointingHandCursor
 
             onClicked: {
-                Qt.openUrlExternally("https://github.com/Kidev/QML-3D-Tools");
+                Qt.openUrlExternally("https://github.com/Kidev/QtQuick3D-Tools");
             }
         }
     }
