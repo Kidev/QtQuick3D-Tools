@@ -56,6 +56,38 @@ Item {
             position: Qt.vector3d(0, 50, 0)
             source: "#Cube"
         }
+
+        Model {
+            id: nearModel
+
+            position: Qt.vector3d(-300, 50, 300)
+            source: "#Cube"
+        }
+
+        Model {
+            id: farModel
+
+            position: Qt.vector3d(300, 50, -300)
+            source: "#Cube"
+        }
+    }
+
+    SpatialItem {
+        id: nearItem
+
+        depthTest: true
+        size: Qt.size(10, 10)
+        target: nearModel
+        view: view3D
+    }
+
+    SpatialItem {
+        id: farItem
+
+        depthTest: true
+        size: Qt.size(10, 10)
+        target: farModel
+        view: view3D
     }
 
     SpatialItem {
@@ -88,6 +120,12 @@ Item {
                 y: spatialItem.linkerEnd.y
             }
         }
+    }
+
+    Item {
+        id: raisedSibling
+
+        z: 10
     }
 
     SignalSpy {
@@ -251,6 +289,40 @@ Item {
             mouseRelease(view3D, start.x + 50, start.y + 20);
             compare(targetModel.position, Qt.vector3d(0, 50, 0));
             spatialItem.holdDragsTarget = true;
+        }
+
+        function test_dragEndsWhenCanceled() {
+            const start = spatialItem.coords;
+            mousePress(view3D, start.x, start.y);
+            verify(spatialItem.dragging);
+            // Hiding the item takes the mouse grab away from it, which cancels the press.
+            spatialItem.visible = false;
+            verify(!spatialItem.dragging);
+            spatialItem.visible = true;
+            mouseRelease(view3D, start.x, start.y);
+        }
+
+        function test_forceTopStacking_data() {
+            return [
+                {
+                    tag: "depth order",
+                    force: false,
+                    farOnTop: false
+                },
+                {
+                    tag: "forced on top",
+                    force: true,
+                    farOnTop: true
+                }
+            ];
+        }
+
+        function test_forceTopStacking(data) {
+            farItem.forceTopStacking = data.force;
+            verify(farItem.distance > nearItem.distance);
+            compare(farItem.z > nearItem.z, data.farOnTop);
+            verify(farItem.z > raisedSibling.z, "overlays stack above ordinary siblings");
+            farItem.forceTopStacking = false;
         }
 
         name: "SpatialItem"

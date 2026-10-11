@@ -279,6 +279,7 @@ git submodule add -b main https://github.com/Kidev/QtQuick3D-Tools libs/
 add_subdirectory(libs/QtQuick3D/Tools)
 target_link_libraries(yourApp PRIVATE QtQuick3DTools)
 ```
+- `SpatialItem` is written in C++ on the private APIs of Qt Quick, Qt Quick Shapes and Qt Quick 3D. [QtQuick3D/Tools/CMakeLists.txt](QtQuick3D/Tools/CMakeLists.txt) finds those modules itself. Private APIs can change between Qt minor releases; the module is tested with the Qt version set in the [Makefile](Makefile).
 - Then you can import in QML and use `SpatialItem`:
 ```qml
 import QtQuick3D.Tools
