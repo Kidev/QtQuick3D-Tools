@@ -367,6 +367,7 @@ Window {
         cursor: spatialNameTag.hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
         depthTest: true
         fixedSize: false
+        forceTopStacking: spatialNameTag.hovered
         holdDragsTarget: false
         hoverEnabled: true
         mouseEnabled: true

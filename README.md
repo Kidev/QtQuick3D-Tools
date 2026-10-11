@@ -4,7 +4,7 @@ QtQuick3D Tools is a QML module that attaches 2D overlays (labels, icons, contro
 ## Demo
 
  [A demo of SpatialItem in your browser is available here](https://demo.kidev.org/QtQuick3D-Tools/). \
- The demo shows 2D overlays following 3D objects as the camera moves. Press and hold the left mouse button on the "SpatialUI" overlay and drag to move its target. Left click the other bubble to cycle its text. Elsewhere, dragging with the left button orbits around a point and dragging with the right button pans that point.
+ The demo shows 2D overlays following 3D objects as the camera moves. Press and hold the left mouse button on the "SpatialUI" overlay and drag to move its target. Left click the other bubble to cycle its text. Hovering either overlay brings it in front of everything else. Elsewhere, dragging with the left button orbits around a point and dragging with the right button pans that point.
  
 ## Features
 
