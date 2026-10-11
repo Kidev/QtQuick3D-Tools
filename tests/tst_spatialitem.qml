@@ -219,6 +219,13 @@ Item {
             return Qt.vector2d(spatialItem.linkerEnd.x, y);
         }
 
+        // The grab covers only what the window has rendered, so a grab smaller than the scene misses the pixels under test.
+        function grabScene() {
+            const image = grabImage(root);
+            verify(image.width >= root.width && image.height >= root.height, `the grab is ${image.width}x${image.height}, smaller than the ${root.width}x${root.height} scene`);
+            return image;
+        }
+
         function isMagenta(image, point) {
             return image.red(point.x, point.y) > 200 && image.green(point.x, point.y) < 60 && image.blue(point.x, point.y) > 200;
         }
@@ -227,13 +234,14 @@ Item {
             waitForRendering(view3D);
             const point = linkerPoint();
             verify(point.y > spatialItem.linkerEnd.y + spatialItem.size.height / 2, "the linker point is below the overlay");
-            verify(isMagenta(grabImage(root), point), "linker visible at its default stacking");
+            const image = grabScene();
+            verify(isMagenta(image, point), `linker visible at its default stacking: pixel ${image.pixel(point.x, point.y)} at (${point.x}, ${point.y})`);
         }
 
         function test_linkerHiddenWithoutShowLinker() {
             spatialItem.showLinker = false;
             waitForRendering(view3D);
-            verify(!isMagenta(grabImage(root), linkerPoint()), "linker hidden while showLinker is false");
+            verify(!isMagenta(grabScene(), linkerPoint()), "linker hidden while showLinker is false");
         }
 
         function test_linkerMouse_data() {
